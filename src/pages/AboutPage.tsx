@@ -1,3 +1,4 @@
+import { Canvas, useFrame } from '@react-three/fiber';
 import ThreeBackground from '../components/ThreeBackground';
 
 const AboutPage: React.FC = () => {
