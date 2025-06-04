@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Stars } from '@react-three/drei';
