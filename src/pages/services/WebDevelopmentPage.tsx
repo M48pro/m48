@@ -1,94 +1,130 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // или next/router если Next.js
+import { motion } from 'framer-motion';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Stars } from '@react-three/drei';
+import { Suspense, useEffect, useState } from 'react';
+
+// Компонент 3D куба
+const RotatingCube = () => {
+  const meshRef = React.useRef();
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      // @ts-ignore
+      meshRef.current.rotation.x += 0.01;
+      // @ts-ignore
+      meshRef.current.rotation.y += 0.01;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} castShadow receiveShadow>
+      <boxGeometry args={[1.5, 1.5, 1.5]} />
+      <meshStandardMaterial color="#4f46e5" metalness={0.7} roughness={0.2} />
+    </mesh>
+  );
+};
+
+// Статичный лейбл с описанием
+const Label = () => (
+  <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center">
+    <h2 className="text-3xl font-bold text-white">Your Web Future</h2>
+    <p className="text-gray-300 mt-2">Powered by modern development and design.</p>
+  </div>
+);
+
+// 3D сцена
+const Scene3D = () => (
+  <Canvas shadows camera={{ position: [0, 0, 5], fov: 50 }}>
+    <Stars radius={100} depth={50} count={5000} factor={4} fade />
+    <ambientLight intensity={0.5} />
+    <directionalLight position={[5, 5, 5]} castShadow intensity={1.2} shadow-mapSize-width={1024} />
+    <Suspense fallback={null}>
+      <RotatingCube />
+    </Suspense>
+    <OrbitControls enableZoom={false} autoRotateSpeed={0.5} />
+  </Canvas>
+);
+
+// Данные из API (пример)
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+}
 
 const WebDevelopmentPage: React.FC = () => {
   const navigate = useNavigate();
+  const [services, setServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    // Здесь можно подключить API или Supabase
+    const mockData = [
+      { id: 1, title: 'Custom Websites', description: 'Pixel-perfect landing pages and corporate websites.' },
+      { id: 2, title: 'E-commerce Platforms', description: 'Online stores with secure payments and inventory management.' },
+      { id: 3, title: 'Full-stack Applications', description: 'Modern apps built with React, Node.js, and Supabase.' },
+      { id: 4, title: 'Support & Maintenance', description: 'Ongoing updates, security patches, and technical support.' },
+    ];
+    setServices(mockData);
+  }, []);
 
   return (
-    <div className="bg-white text-gray-800 min-h-screen">
-      {/* Основной контент */}
-      <main className="pt-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
-        {/* Заголовок */}
-        <section className="text-center mt-12">
-          <h1 className="text-5xl font-bold leading-tight mb-6">
-            Web Development Services
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Creating high-performance, scalable and modern web applications tailored to your business needs.
-          </p>
-        </section>
+    <div className="bg-black min-h-screen text-white relative overflow-hidden">
+      {/* 3D секция */}
+      <section className="h-screen w-full fixed inset-0 z-0">
+        <Scene3D />
+        <Label />
+      </section>
 
-        {/* What We Do */}
-        <section className="mt-20">
-          <h2 className="text-3xl font-semibold text-center mb-10">What We Build</h2>
-          <div className="grid md:grid-cols-2 gap-10">
-            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition">
-              <h3 className="text-2xl font-medium mb-3">Custom Websites</h3>
-              <p className="text-gray-600">
-                From corporate websites to landing pages, we craft pixel-perfect user experiences that convert.
-              </p>
-            </div>
-            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition">
-              <h3 className="text-2xl font-medium mb-3">E-commerce Platforms</h3>
-              <p className="text-gray-600">
-                Scalable online stores with secure payments, inventory management, and seamless UX.
-              </p>
-            </div>
-            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition">
-              <h3 className="text-2xl font-medium mb-3">Web Applications</h3>
-              <p className="text-gray-600">
-                Full-stack custom apps using the latest technologies like React, Node.js, Supabase and more.
-              </p>
-            </div>
-            <div className="bg-gray-50 p-8 rounded-lg shadow-sm hover:shadow-md transition">
-              <h3 className="text-2xl font-medium mb-3">Maintenance & Support</h3>
-              <p className="text-gray-600">
-                Ongoing updates, security patches, performance optimization and technical support.
-              </p>
-            </div>
-          </div>
-        </section>
+      {/* Контент поверх 3D */}
+      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-96 pb-32">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-6xl md:text-7xl font-bold leading-tight mb-6 text-center"
+        >
+          Web Development
+        </motion.h1>
 
-        {/* Technologies */}
-        <section className="mt-20">
-          <h2 className="text-3xl font-semibold text-center mb-10">Technologies We Use</h2>
-          <div className="flex flex-wrap justify-center gap-6 text-xl text-gray-700">
-            {['React', 'Next.js', 'TypeScript', 'Node.js', 'Express', 'Supabase', 'MongoDB', 'PostgreSQL', 'Docker'].map((tech) => (
-              <span key={tech} className="bg-blue-50 px-4 py-2 rounded-full hover:bg-blue-100 transition">
-                {tech}
-              </span>
-            ))}
-          </div>
-        </section>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-16"
+        >
+          We build high-performance, scalable and modern web applications tailored to your business needs.
+        </motion.p>
 
-        {/* Why Choose Us */}
-        <section className="mt-20 pb-16">
-          <h2 className="text-3xl font-semibold text-center mb-10">Why Choose Us?</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <h3 className="text-xl font-medium mb-2">Tailored Solutions</h3>
-              <p className="text-gray-600">We build exactly what you need, not generic templates.</p>
+        {/* Услуги */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="grid md:grid-cols-2 gap-10"
+        >
+          {services.map((service) => (
+            <div key={service.id} className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all">
+              <h3 className="text-2xl font-semibold mb-2">{service.title}</h3>
+              <p className="text-gray-400">{service.description}</p>
             </div>
-            <div className="text-center">
-              <h3 className="text-xl font-medium mb-2">Fast Delivery</h3>
-              <p className="text-gray-600">Agile methodology ensures timely delivery without compromising quality.</p>
-            </div>
-            <div className="text-center">
-              <h3 className="text-xl font-medium mb-2">Support Included</h3>
-              <p className="text-gray-600">Ongoing maintenance and technical support after launch.</p>
-            </div>
-          </div>
-        </section>
+          ))}
+        </motion.div>
 
-        {/* CTA Button */}
-        <div className="text-center mb-24">
+        {/* CTA кнопка */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mt-16"
+        >
           <button
             onClick={() => navigate('/contact')}
-            className="bg-black text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition"
+            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg hover:from-purple-700 hover:to-blue-700 transition-all"
           >
             Start Your Project
           </button>
-        </div>
+        </motion.div>
       </main>
     </div>
   );
