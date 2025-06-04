@@ -1,11 +1,7 @@
-// src/components/Layout.tsx
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC = () => {
   return (
     <div style={{ fontFamily: 'Arial, sans-serif' }}>
       <header
@@ -19,7 +15,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <h1>🚀 M48 Project</h1>
       </header>
 
-      <main style={{ padding: '2rem' }}>{children}</main>
+      <main style={{ padding: '2rem' }}>
+        <Outlet /> {/* ← Здесь будут отображаться дочерние страницы */}
+      </main>
 
       <footer
         style={{
