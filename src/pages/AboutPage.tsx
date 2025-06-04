@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
+import { Points, PointMaterial, Stars } from '@react-three/drei';
 import * as THREE from 'three';
-import { motion } from 'framer-motion';
+import { extend } from '@react-three/fiber';
 
-// Анимированная сетка из точек
+// Расширяем THREE, чтобы использовать <Points /> и <PointMaterial />
+extend({ Points, PointMaterial });
+
 const AnimatedGrid = () => {
   const points = React.useMemo(() => {
     const temp = [];
@@ -19,12 +21,12 @@ const AnimatedGrid = () => {
   }, []);
 
   return (
-    <Points>
+    <points>
       <pointMaterial color="#6366f1" size={0.07} />
       {points.map((pos, i) => (
         <Point key={i} position={pos as [number, number, number]} />
       ))}
-    </Points>
+    </points>
   );
 };
 
@@ -45,6 +47,7 @@ const Scene3D = () => (
   <Canvas camera={{ position: [0, 0, 5], fov: 40 }}>
     <ambientLight intensity={0.5} />
     <directionalLight position={[5, 5, 5]} />
+    <Stars radius={100} depth={50} count={5000} factor={4} fade />
     <Suspense fallback={null}>
       <AnimatedGrid />
     </Suspense>
