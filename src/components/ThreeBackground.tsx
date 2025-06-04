@@ -1,4 +1,3 @@
-// src/components/ThreeBackground.tsx
 import React, { Suspense, useRef, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -6,8 +5,8 @@ import * as THREE from 'three';
 
 // Расширяем пространство имён для использования Points и PointMaterial
 import { extend } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
-extend({ Points, PointMaterial });
+import { Points } from '@react-three/drei';
+extend({ Points });
 
 // Postprocessing
 import {
@@ -50,7 +49,7 @@ const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ type = 'dynamic-shade
       </EffectComposer>
 
       {/* Контроллы камеры */}
-      <OrbitControls enableZoom={false} autoRotateSpeed={0.5} />
+      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
     </Canvas>
   );
 };
@@ -58,53 +57,63 @@ const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ type = 'dynamic-shade
 // 🌀 Dynamic Shader Plane
 function DynamicShaderPlane() {
   const ref = useRef<THREE.Mesh>(null);
-  const { viewport } = useThree();
+  const geometry = useRef(new THREE.PlaneGeometry(10, 10, 200, 200));
+  const material = useRef(
+    new THREE.ShaderMaterial({
+      uniforms: {
+        u_time: { value: 0 },
+        u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+      },
+      vertexShader: `
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        varying vec2 vUv;
 
-  const uniforms = {
-    u_time: { value: 0 },
-    u_mouse: { value: new THREE.Vector2(0, 0) },
-    u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
-  };
+        void main() {
+          vUv = uv;
+          vec3 pos = position;
+          float wave = sin(pos.x * 2.0 + u_time) * sin(pos.y * 2.0 + u_time * 0.5);
+          pos.z += wave * 0.3;
 
-  const geometry = new THREE.PlaneGeometry(10, 10, 200, 200);
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: `
-      uniform float u_time;
-      varying vec2 vUv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+        }
+      `,
+      fragmentShader: `
+        precision mediump float;
+        varying vec2 vUv;
 
-      void main() {
-        vUv = uv;
-        vec3 pos = position;
-        float wave = sin(pos.x * 2.0 + u_time) * sin(pos.y * 2.0 + u_time * 0.5);
-        pos.z += wave * 0.3;
+        void main() {
+          vec3 color = vec3(vUv.x, vUv.y, abs(sin(vUv.x * 10.0 + vUv.y * 10.0)));
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `
+    })
+  );
 
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  useEffect(() => {
+    const handleResize = () => {
+      if (material.current.uniforms.u_resolution) {
+        material.current.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
       }
-    `,
-    fragmentShader: `
-      precision mediump float;
-      varying vec2 vUv;
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      geometry.current.dispose();
+      material.current.dispose();
+    };
+  }, []);
 
-      void main() {
-        vec3 color = vec3(vUv.x, vUv.y, abs(sin(vUv.x * 10.0 + vUv.y * 10.0 + u_time)));
-        gl_FragColor = vec4(color, 1.0);
-      }
-    `
-  });
-
-  // Обновление времени
   useFrame(({ clock }) => {
     if (ref.current?.material.uniforms.u_time) {
-      // @ts-ignore
       ref.current.material.uniforms.u_time.value = clock.getElapsedTime();
     }
   });
 
   return (
     <mesh ref={ref}>
-      <primitive object={geometry} attach="geometry" />
-      <primitive object={material} attach="material" />
+      <primitive object={geometry.current} attach="geometry" />
+      <primitive object={material.current} attach="material" />
     </mesh>
   );
 }
@@ -113,6 +122,8 @@ function DynamicShaderPlane() {
 function InteractiveCrystalGrid() {
   const groupRef = useRef<THREE.Group>(null);
   const mouse = useRef({ x: 0, y: 0 });
+  const size = 8;
+  const spacing = 1.2;
 
   // Ловим движение мыши
   useEffect(() => {
@@ -129,15 +140,10 @@ function InteractiveCrystalGrid() {
 
   useFrame(({ clock }) => {
     if (groupRef.current) {
-      // @ts-ignore
       groupRef.current.rotation.y = mouse.current.x * 0.5 + Math.sin(clock.getElapsedTime()) * 0.1;
-      // @ts-ignore
       groupRef.current.rotation.x = mouse.current.y * 0.5 + Math.cos(clock.getElapsedTime()) * 0.1;
     }
   });
-
-  const size = 8;
-  const spacing = 1.2;
 
   return (
     <group ref={groupRef}>
@@ -200,9 +206,7 @@ function GlowingCube() {
 
   useFrame(({ clock }) => {
     if (ref.current) {
-      // @ts-ignore
       ref.current.rotation.y = clock.getElapsedTime() * 0.2;
-      // @ts-ignore
       ref.current.rotation.x = clock.getElapsedTime() * 0.1;
     }
   });
@@ -231,20 +235,28 @@ function StarScape() {
     return temp;
   }, []);
 
-  useFrame(() => {
-    if (starsRef.current.length > 0) {
-      starsRef.current.forEach(star => {
-        // @ts-ignore
-        star.position.z -= 0.05;
-        // @ts-ignore
+  useFrame(({ delta }) => {
+    starsRef.current.forEach(star => {
+      if (star && star.position) {
+        star.position.z -= delta * 0.5;
         if (star.position.z < -25) star.position.z = 25;
-      });
-    }
+      }
+    });
   });
 
   function Point({ position }: { position: [number, number, number] }) {
     const ref = useRef<THREE.Points>(null);
-    starsRef.current.push(ref.current!);
+
+    useEffect(() => {
+      if (ref.current) {
+        starsRef.current.push(ref.current);
+        return () => {
+          const index = starsRef.current.indexOf(ref.current!);
+          if (index > -1) starsRef.current.splice(index, 1);
+        };
+      }
+    }, []);
+
     return <points ref={ref} position={position} />;
   }
 
