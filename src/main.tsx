@@ -1,24 +1,16 @@
-// src/main.tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { AppProviders, routes } from '@/routes';
 
-// Простые глобальные стили
-const style = document.createElement('style');
-style.textContent = `
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: #f9fafb;
-  }
-`;
-document.head.appendChild(style);
+import './index.css';
+
+const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <AppProviders>
+      <RouterProvider router={router} />
+    </AppProviders>
   </React.StrictMode>
 );
