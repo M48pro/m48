@@ -1,9 +1,9 @@
-
 import React, { Suspense } from 'react';
 import { Canvas, useFrame, extend } from '@react-three/fiber';
-import { Points, PointMaterial, Stars, ErrorBoundary } from '@react-three/drei'; // ✅ Теперь ErrorBoundary доступен
+import { Points, PointMaterial, Stars } from '@react-three/drei';
 import { motion } from 'framer-motion';
 
+// Расширяем THREE для использования <points> и <pointMaterial>
 extend({ Points, PointMaterial });
 
 const AnimatedGrid = () => {
@@ -30,7 +30,7 @@ const AnimatedGrid = () => {
 };
 
 const Point = ({ position }: { position: [number, number, number] }) => {
-  const ref = React.useRef<THREE.Points>(null);
+  const ref = React.useRef<any>(null);
 
   useFrame(() => {
     if (ref.current) {
@@ -58,9 +58,9 @@ const AboutPage: React.FC = () => {
     <div className="bg-black min-h-screen text-white relative overflow-hidden">
       {/* 3D фон */}
       <section className="h-screen w-full fixed inset-0 z-0">
-        <ErrorBoundary fallback={null}>
+        <Suspense fallback={null}>
           <Scene3D />
-        </ErrorBoundary>
+        </Suspense>
         <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center">
           <h2 className="text-3xl font-bold text-white">About Us</h2>
           <p className="text-gray-300 mt-2">Meet the team behind our digital creations.</p>
