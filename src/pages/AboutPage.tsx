@@ -1,13 +1,14 @@
-import { motion } from 'framer-motion';
 import React, { Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Stars } from '@react-three/drei';
 import * as THREE from 'three';
 import { extend } from '@react-three/fiber';
+import { motion } from 'framer-motion'; // ✅ Добавлен импорт
 
-// Расширяем THREE, чтобы использовать <Points /> и <PointMaterial />
+// Расширяем пространство имён THREE для использования <Points /> и <PointMaterial />
 extend({ Points, PointMaterial });
 
+// Компонент точек
 const AnimatedGrid = () => {
   const points = React.useMemo(() => {
     const temp = [];
@@ -31,6 +32,7 @@ const AnimatedGrid = () => {
   );
 };
 
+// Одна точка с анимацией
 const Point = ({ position }: { position: [number, number, number] }) => {
   const ref = React.useRef<THREE.Points>(null);
 
@@ -44,6 +46,7 @@ const Point = ({ position }: { position: [number, number, number] }) => {
   return <points ref={ref} position={position} />;
 };
 
+// Сцена с 3D фоном
 const Scene3D = () => (
   <Canvas camera={{ position: [0, 0, 5], fov: 40 }}>
     <ambientLight intensity={0.5} />
@@ -55,6 +58,7 @@ const Scene3D = () => (
   </Canvas>
 );
 
+// Основная страница
 const AboutPage: React.FC = () => {
   return (
     <div className="bg-black min-h-screen text-white relative overflow-hidden">
