@@ -1,8 +1,10 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Stars } from '@react-three/drei';
-import { Suspense, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ Добавлен импорт
+
+const WebDevelopmentPage = () => {
+  const navigate = useNavigate(); // Теперь работает!
+  ...
+}
 
 // Компонент 3D куба
 const RotatingCube = () => {
