@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react'; // ✅ Добавлено: Suspense
 import { useNavigate } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
