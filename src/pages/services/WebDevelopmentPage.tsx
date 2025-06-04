@@ -1,6 +1,5 @@
 import React from 'react';
-import ThreeBackground from '../components/ThreeBackground';
-
+import ThreeBackground from '../components/ThreeBackground.tsx';
 const WebDevelopmentPage: React.FC = () => {
   return (
     <div className="bg-black min-h-screen text-white relative overflow-hidden">
