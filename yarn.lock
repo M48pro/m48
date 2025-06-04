@@ -392,7 +392,7 @@
   dependencies:
     "@use-gesture/core" "10.3.1"
 
-"@vitejs/plugin-react@^4.2.1":
+"@vitejs/plugin-react@^4.5.1":
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-react/-/plugin-react-4.5.1.tgz#19432712467ad3b81f24c85d695a6febf8d4cc11"
   integrity sha512-uPZBqSI0YD4lpkIru6M35sIfylLGTyhGHvDZbNLuMA73lMlwJKz5xweH7FajfcCAc2HnINciejA9qTz0dr0M7A==
@@ -812,7 +812,7 @@ tunnel-rat@^0.1.2:
   dependencies:
     zustand "^4.3.2"
 
-typescript@^5.3.3:
+typescript@^5.8.3:
   version "5.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.3.tgz#92f8a3e5e3cf497356f4178c34cd65a7f5e8440e"
   integrity sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==
