@@ -10,7 +10,13 @@ import { Points, PointMaterial } from '@react-three/drei';
 extend({ Points, PointMaterial });
 
 // Postprocessing
-import { EffectComposer, Bloom, Vignette, Glitch, Pixelation } from '@react-three/postprocessing';
+import {
+  EffectComposer,
+  Bloom,
+  Vignette,
+  Glitch,
+  Pixelation
+} from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
 
 interface ThreeBackgroundProps {
@@ -33,10 +39,14 @@ const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ type = 'dynamic-shade
 
       {/* Постпроцессинг эффекты */}
       <EffectComposer>
-        {effects.includes('bloom') && <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} intensity={1.3} blendFunction={BlendFunction.ADD} />}
+        {effects.includes('bloom') && (
+          <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} intensity={1.3} blendFunction={BlendFunction.ADD} />
+        )}
         {effects.includes('vignette') && <Vignette eskil={false} offset={0.5} darkness={1.0} />}
         {effects.includes('pixelation') && <Pixelation granularity={80} />}
-        {effects.includes('glitch') && <Glitch strength={0.3} active={true} delay={{ min: 1, max: 3 }} duration={{ min: 0.6, max: 1.5 }} ratio={0.85} />}
+        {effects.includes('glitch') && (
+          <Glitch strength={0.3} active delay={{ min: 1, max: 3 }} duration={{ min: 0.6, max: 1.5 }} ratio={0.85} />
+        )}
       </EffectComposer>
 
       {/* Контроллы камеры */}
