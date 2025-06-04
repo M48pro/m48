@@ -43,8 +43,8 @@ const DesignPage: React.FC = () => {
       <section className="h-screen w-full fixed inset-0 z-0">
         <Scene3D />
         <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center">
-          <h2 className="text-3xl font-bold text-white">UI/UX Дизайн</h2>
-          <p className="text-gray-300 mt-2">Создание красивых и функциональных интерфейсов.</p>
+          <h2 className="text-3xl font-bold text-white">UI/UX Design</h2>
+          <p className="text-gray-300 mt-2">Creating beautiful and functional interfaces.</p>
         </div>
       </section>
 
@@ -65,7 +65,7 @@ const DesignPage: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl text-gray-300 text-center max-w-3xl mx-auto mb-16"
         >
-          Мы создаём интуитивно понятные и визуально привлекательные интерфейсы, которые повышают вовлечённость пользователей.
+          We create intuitive and visually stunning interfaces that increase user engagement.
         </motion.p>
 
         {/* Услуги */}
@@ -77,19 +77,19 @@ const DesignPage: React.FC = () => {
         >
           <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-blue-500 transition-all">
             <h3 className="text-2xl font-semibold mb-2">User Research</h3>
-            <p className="text-gray-400">Изучение целевой аудитории и её потребностей для создания продуктов, которые работают.</p>
+            <p className="text-gray-400">Studying your audience to build products that truly work for them.</p>
           </div>
           <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-blue-500 transition-all">
             <h3 className="text-2xl font-semibold mb-2">Wireframing & Prototyping</h3>
-            <p className="text-gray-400">Создание прототипов до начала разработки для тестирования концепций.</p>
+            <p className="text-gray-400">Building interactive prototypes before development starts.</p>
           </div>
           <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-blue-500 transition-all">
             <h3 className="text-2xl font-semibold mb-2">UI Kit & Branding</h3>
-            <p className="text-gray-400">Разработка брендинга и набора компонентов для единообразия интерфейса.</p>
+            <p className="text-gray-400">Design systems and brand identity for a consistent look and feel.</p>
           </div>
           <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-blue-500 transition-all">
             <h3 className="text-2xl font-semibold mb-2">Interactive Prototypes</h3>
-            <p className="text-gray-400">Анимированные прототипы для презентации перед командой или клиентом.</p>
+            <p className="text-gray-400">Animated mockups for presenting ideas to clients or teams.</p>
           </div>
         </motion.div>
 
@@ -101,7 +101,7 @@ const DesignPage: React.FC = () => {
           className="text-center mt-16"
         >
           <button className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg hover:from-blue-700 hover:to-cyan-600 transition-all">
-            Заказать дизайн
+            Request a Design
           </button>
         </motion.div>
       </main>
