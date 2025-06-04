@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import AnimatedOutlet from '@/components/AnimatedOutlet'; // или заменить на непосредственный импорт
 
 const Layout: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const Layout: React.FC = () => {
       </header>
 
       <main style={{ padding: '2rem' }}>
-        <Outlet /> {/* ← Здесь будут отображаться дочерние страницы */}
+        <AnimatedOutlet /> {/* ← Анимация между страницами */}
       </main>
 
       <footer
