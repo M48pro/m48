@@ -1,10 +1,9 @@
+
 import React, { Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Stars } from '@react-three/drei';
-import { extend, Html, ErrorBoundary } from '@react-three/fiber';
+import { Canvas, useFrame, extend } from '@react-three/fiber';
+import { Points, PointMaterial, Stars, ErrorBoundary } from '@react-three/drei'; // ✅ Теперь ErrorBoundary доступен
 import { motion } from 'framer-motion';
 
-// Расширяем THREE для использования <points /> и <pointMaterial />
 extend({ Points, PointMaterial });
 
 const AnimatedGrid = () => {
