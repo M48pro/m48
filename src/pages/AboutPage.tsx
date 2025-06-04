@@ -1,13 +1,24 @@
 import React, { Suspense } from 'react';
-import { Canvas, useFrame, extend } from '@react-three/fiber';
-import { Points, PointMaterial, Stars } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Points, PointMaterial } from '@react-three/drei';
 import { motion } from 'framer-motion';
 
-// Расширяем THREE для использования <points> и <pointMaterial>
+// Расширяем пространство имён THREE
 extend({ Points, PointMaterial });
 
+function point({ position }: { position: [number, number, number] }) {
+  const ref = React.useRef<THREE.Points>(null);
+  useFrame(() => {
+    if (ref.current) {
+      // @ts-ignore
+      ref.current.position.y += 0.002;
+    }
+  });
+  return <points ref={ref} position={position} />;
+}
+
 const AnimatedGrid = () => {
-  const points = React.useMemo(() => {
+  const positions = React.useMemo(() => {
     const temp = [];
     for (let i = 0; i < 500; i++) {
       temp.push([
@@ -22,31 +33,17 @@ const AnimatedGrid = () => {
   return (
     <points>
       <pointMaterial color="#6366f1" size={0.07} />
-      {points.map((pos, i) => (
-        <Point key={i} position={pos as [number, number, number]} />
+      {positions.map((pos, i) => (
+        <point key={i} position={pos as [number, number, number]} />
       ))}
     </points>
   );
 };
 
-const Point = ({ position }: { position: [number, number, number] }) => {
-  const ref = React.useRef<any>(null);
-
-  useFrame(() => {
-    if (ref.current) {
-      // @ts-ignore
-      ref.current.position.y += 0.002;
-    }
-  });
-
-  return <points ref={ref} position={position} />;
-};
-
 const Scene3D = () => (
-  <Canvas shadows camera={{ position: [0, 0, 5], fov: 40 }}>
-    <Stars radius={100} depth={50} count={5000} factor={4} fade />
+  <Canvas camera={{ position: [0, 0, 5], fov: 40 }}>
     <ambientLight intensity={0.5} />
-    <directionalLight position={[5, 5, 5]} castShadow intensity={1.2} shadow-mapSize-width={1024} />
+    <directionalLight position={[5, 5, 5]} />
     <Suspense fallback={null}>
       <AnimatedGrid />
     </Suspense>
@@ -58,9 +55,7 @@ const AboutPage: React.FC = () => {
     <div className="bg-black min-h-screen text-white relative overflow-hidden">
       {/* 3D фон */}
       <section className="h-screen w-full fixed inset-0 z-0">
-        <Suspense fallback={null}>
-          <Scene3D />
-        </Suspense>
+        <Scene3D />
         <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center">
           <h2 className="text-3xl font-bold text-white">About Us</h2>
           <p className="text-gray-300 mt-2">Meet the team behind our digital creations.</p>
