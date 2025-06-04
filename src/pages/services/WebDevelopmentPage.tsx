@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ Добавлен импорт
-
-const WebDevelopmentPage = () => {
-  const navigate = useNavigate(); // Теперь работает!
-  ...
-}
+import { useNavigate } from 'react-router-dom';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Stars } from '@react-three/drei';
+import { motion } from 'framer-motion';
 
 // Компонент 3D куба
 const RotatingCube = () => {
@@ -27,14 +25,6 @@ const RotatingCube = () => {
   );
 };
 
-// Статичный лейбл с описанием
-const Label = () => (
-  <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center">
-    <h2 className="text-3xl font-bold text-white">Your Web Future</h2>
-    <p className="text-gray-300 mt-2">Powered by modern development and design.</p>
-  </div>
-);
-
 // 3D сцена
 const Scene3D = () => (
   <Canvas shadows camera={{ position: [0, 0, 5], fov: 50 }}>
@@ -48,34 +38,14 @@ const Scene3D = () => (
   </Canvas>
 );
 
-// Данные из API (пример)
-interface Service {
-  id: number;
-  title: string;
-  description: string;
-}
-
 const WebDevelopmentPage: React.FC = () => {
   const navigate = useNavigate();
-  const [services, setServices] = useState<Service[]>([]);
-
-  useEffect(() => {
-    // Здесь можно подключить API или Supabase
-    const mockData = [
-      { id: 1, title: 'Custom Websites', description: 'Pixel-perfect landing pages and corporate websites.' },
-      { id: 2, title: 'E-commerce Platforms', description: 'Online stores with secure payments and inventory management.' },
-      { id: 3, title: 'Full-stack Applications', description: 'Modern apps built with React, Node.js, and Supabase.' },
-      { id: 4, title: 'Support & Maintenance', description: 'Ongoing updates, security patches, and technical support.' },
-    ];
-    setServices(mockData);
-  }, []);
 
   return (
     <div className="bg-black min-h-screen text-white relative overflow-hidden">
       {/* 3D секция */}
       <section className="h-screen w-full fixed inset-0 z-0">
         <Scene3D />
-        <Label />
       </section>
 
       {/* Контент поверх 3D */}
@@ -105,12 +75,22 @@ const WebDevelopmentPage: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="grid md:grid-cols-2 gap-10"
         >
-          {services.map((service) => (
-            <div key={service.id} className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all">
-              <h3 className="text-2xl font-semibold mb-2">{service.title}</h3>
-              <p className="text-gray-400">{service.description}</p>
-            </div>
-          ))}
+          <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all">
+            <h3 className="text-2xl font-semibold mb-2">Custom Websites</h3>
+            <p className="text-gray-400">Pixel-perfect landing pages and corporate websites.</p>
+          </div>
+          <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all">
+            <h3 className="text-2xl font-semibold mb-2">E-commerce Platforms</h3>
+            <p className="text-gray-400">Online stores with secure payments and inventory management.</p>
+          </div>
+          <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all">
+            <h3 className="text-2xl font-semibold mb-2">Full-stack Applications</h3>
+            <p className="text-gray-400">Modern apps built with React, Node.js, and Supabase.</p>
+          </div>
+          <div className="bg-gray-900 bg-opacity-80 p-8 rounded-lg backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all">
+            <h3 className="text-2xl font-semibold mb-2">Support & Maintenance</h3>
+            <p className="text-gray-400">Ongoing updates, security patches, and technical support.</p>
+          </div>
         </motion.div>
 
         {/* CTA кнопка */}
