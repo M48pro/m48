@@ -70,7 +70,5 @@ export const routes: RouteObject[] = [
 ];
 
 export const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AuthProvider>
-    {children}
-  </AuthProvider>
+  <AuthProvider>{children}</AuthProvider>
 );
