@@ -1,26 +1,21 @@
 // vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'node:path';
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@pages': path.resolve(__dirname, './src/pages'),
+      '@': '/src',
+      '@components': '/src/components',
+      '@pages': '/src/pages'
     },
-    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js']
   },
   server: {
-    port: 5173,
-    open: true,
+    port: 5173
   },
   build: {
-    outDir: 'dist',
-  },
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
+    outDir: 'dist'
+  }
 });
