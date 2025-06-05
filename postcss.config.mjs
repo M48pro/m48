@@ -1,5 +1,7 @@
-export default {
+module.exports = {
   plugins: {
-    tailwindcss: {}
+    tailwindcss: {},
+    autoprefixer: {},
+    cssnano: {}
   }
-}
+};
