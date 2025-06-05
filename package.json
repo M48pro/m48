@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.11.29",
+    "@tailwindcss/postcss8": "^0.1.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.5.1",

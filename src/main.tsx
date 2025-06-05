@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { AppProviders, routes } from '@/routes';
+import { AppProviders, routes } from '@/routes.tsx';
 
 import './index.css';
 
