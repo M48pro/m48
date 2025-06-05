@@ -10,6 +10,7 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
+    "@react-three/fiber": "^9.1.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2"
