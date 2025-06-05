@@ -204,7 +204,7 @@ postcss@^8.1.0, postcss@^8.4.27, postcss@^8.5.4:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-react-dom@>=18:
+react-dom@^19.1.0, react-dom@>=18:
   version "19.1.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-19.1.0.tgz"
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
