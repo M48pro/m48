@@ -12,6 +12,50 @@
   resolved "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.19.12.tgz"
   integrity sha512-B71g1QpxfwBvNrfyJdVDexenDIt1CiDN1TIXLbhOw0KhJzE78KIFGX6OJ9MrtC0oOqMWf+0xop4qEU8JrJTwCg==
 
+"@rolldown/pluginutils@1.0.0-beta.9":
+  version "1.0.0-beta.9"
+  resolved "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-beta.9.tgz"
+  integrity sha512-e9MeMtVWo186sgvFFJOPGy7/d2j2mZhLJIdVW0C/xDluuOvymEATqz6zKsP0ZmXGzQtqlyjz5sC1sYQUoJG98w==
+
+"@swc/core@^1.11.22":
+  version "1.11.31"
+  resolved "https://registry.npmjs.org/@swc/core/-/core-1.11.31.tgz"
+  integrity sha512-mAby9aUnKRjMEA7v8cVZS9Ah4duoRBnX7X6r5qrhTxErx+68MoY1TPrVwj/66/SWN3Bl+jijqAqoB8Qx0QE34A==
+  dependencies:
+    "@swc/counter" "^0.1.3"
+    "@swc/types" "^0.1.21"
+  optionalDependencies:
+    "@swc/core-darwin-arm64" "1.11.31"
+    "@swc/core-darwin-x64" "1.11.31"
+    "@swc/core-linux-arm-gnueabihf" "1.11.31"
+    "@swc/core-linux-arm64-gnu" "1.11.31"
+    "@swc/core-linux-arm64-musl" "1.11.31"
+    "@swc/core-linux-x64-gnu" "1.11.31"
+    "@swc/core-linux-x64-musl" "1.11.31"
+    "@swc/core-win32-arm64-msvc" "1.11.31"
+    "@swc/core-win32-ia32-msvc" "1.11.31"
+    "@swc/core-win32-x64-msvc" "1.11.31"
+
+"@swc/counter@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.npmjs.org/@swc/counter/-/counter-0.1.3.tgz"
+  integrity sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==
+
+"@swc/types@^0.1.21":
+  version "0.1.21"
+  resolved "https://registry.npmjs.org/@swc/types/-/types-0.1.21.tgz"
+  integrity sha512-2YEtj5HJVbKivud9N4bpPBAyZhj4S2Ipe5LkUG94alTpr7in/GU/EARgPAd3BwU+YOmFVJC2+kjqhGRi3r0ZpQ==
+  dependencies:
+    "@swc/counter" "^0.1.3"
+
+"@vitejs/plugin-react-swc@^3.10.1":
+  version "3.10.1"
+  resolved "https://registry.npmjs.org/@vitejs/plugin-react-swc/-/plugin-react-swc-3.10.1.tgz"
+  integrity sha512-FmQvN3yZGyD9XW6IyxE86Kaa/DnxSsrDQX1xCR1qojNpBLaUop+nLYFvhCkJsq8zOupNjCRA9jyhPGOJsSkutA==
+  dependencies:
+    "@rolldown/pluginutils" "1.0.0-beta.9"
+    "@swc/core" "^1.11.22"
+
 autoprefixer@^10.4.21:
   version "10.4.21"
   resolved "https://registry.npmjs.org/autoprefixer/-/autoprefixer-10.4.21.tgz"
@@ -170,7 +214,7 @@ update-browserslist-db@^1.1.3:
     escalade "^3.2.0"
     picocolors "^1.1.1"
 
-vite@^4.0.0:
+"vite@^4 || ^5 || ^6", vite@^4.0.0:
   version "4.5.14"
   resolved "https://registry.npmjs.org/vite/-/vite-4.5.14.tgz"
   integrity sha512-+v57oAaoYNnO3hIu5Z/tJRZjq5aHM2zDve9YZ8HngVHbhk66RStobhb1sqPMIPEleV6cNKYK4eGrAbE9Ulbl2g==
