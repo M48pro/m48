@@ -1,21 +1,25 @@
-import React, { Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Stars } from '@react-three/drei';
-import { motion } from 'framer-motion';
+import React from 'react';
 
-// Вращающаяся геометрическая фигура — додекаэдр
-const RotatingPolyhedron = () => {
-  const meshRef = React.useRef();
-
-  useFrame(() => {
-    if (meshRef.current) {
-      // @ts-ignore
-      meshRef.current.rotation.y += 0.01;
-    }
-  });
-
+const ServicesPage = () => {
   return (
-    <mesh ref={meshRef} castShadow receiveShadow>
-      <dodecahedronGeometry args={[1.4, 0]} />
-      <meshStandardMaterial color="#6366f1" metalness={0.7} roughness={0.3} />
-    </mesh>
+    <div className="p-8">
+      <h1 className="text-4xl font-bold mb-6">Наши услуги</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="border p-6 rounded shadow">
+          <h2 className="text-2xl font-semibold mb-2">Веб-разработка</h2>
+          <p>Создание современных сайтов и приложений</p>
+        </div>
+        <div className="border p-6 rounded shadow">
+          <h2 className="text-2xl font-semibold mb-2">Дизайн</h2>
+          <p>UI/UX, брендинг, анимация интерфейсов</p>
+        </div>
+        <div className="border p-6 rounded shadow">
+          <h2 className="text-2xl font-semibold mb-2">Поддержка</h2>
+          <p>Обслуживание, обновления, техническая помощь</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ServicesPage;
