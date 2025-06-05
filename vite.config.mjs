@@ -7,9 +7,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': __dirname + '/src',
+  build: {
+    rollupOptions: {
+      external: ['@react-three/fiber'], 
     },
   },
 });
